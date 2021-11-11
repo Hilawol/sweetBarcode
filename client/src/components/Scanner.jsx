@@ -1,10 +1,15 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import './scanner.css';
 import {Html5Qrcode} from "html5-qrcode";
 
 function Scanner() {
+  
+  let html5QrCode ;
 
-  const html5QrCode = new Html5Qrcode("reader");
+  useEffect(() => {
+    html5QrCode = new Html5Qrcode("reader");
+  }, [])
+ 
 
 
   const qrCodeSuccessCallback = (code) =>{
@@ -17,7 +22,7 @@ function Scanner() {
     console.log("Start scan clicked ");
     // If you want to prefer back camera
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+   html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
   }
 
   const stopScan = () =>{
