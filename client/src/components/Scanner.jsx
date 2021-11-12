@@ -27,8 +27,8 @@ function Scanner() {
     console.log("Start scan clicked ");
   
     // If you want to prefer back camera
-    const config = { fps: 10, qrbox: { width: 500, height: 250 } };
-    readerRef.current.start({ facingMode: "environment" }, {}, qrCodeSuccessCallback);
+    const config = { fps: 10, qrbox: { width: '80%', height: '10%' } };
+    readerRef.current.start({ facingMode: "environment" },config, qrCodeSuccessCallback);
   }
 
   const stopScan = () =>{
@@ -37,6 +37,7 @@ function Scanner() {
       readerRef.current.stop().then((ignore) => {
         // QR Code scanning is stopped.
       }).catch((err) => {
+        setScannedCode(err);
         // Stop failed, handle it.
       });
 
