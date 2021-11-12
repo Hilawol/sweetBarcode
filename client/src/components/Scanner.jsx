@@ -27,7 +27,7 @@ function Scanner() {
     console.log("Start scan clicked ");
   
     // If you want to prefer back camera
-    const config = { fps: 10, qrbox: { width: '80%', height: '10%' } };
+    const config = { fps: 2, qrbox: { width: '80%', height: '10%' } };
     readerRef.current.start({ facingMode: "environment" },config, qrCodeSuccessCallback);
   }
 
