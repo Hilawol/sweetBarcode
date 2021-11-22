@@ -1,6 +1,6 @@
 import React ,{useEffect,useState,useRef} from 'react'
 import './scanner.css';
-import Quagga from 'quagga';
+import {Html5Qrcode} from "html5-qrcode";
 
 function Scanner() {
 
@@ -10,43 +10,36 @@ function Scanner() {
   
 
   useEffect(() => {
-    Quagga.init({
-      inputStream : {
-        name : "Live",
-        type : "LiveStream",
-        target: readerRef.current
-      },
-      decoder : {
-        readers : ["code_128_reader"]
-      }
-    }, function(err) {
-        if (err) {
-            console.log(err);
-            return
-        }
-        console.log("Initialization finished. Ready to start");
-       // Quagga.start();
-    });
-    Quagga.onDetected(qrCodeSuccessCallback);
+    const html5QrCode = new Html5Qrcode("reader");
+    readerRef.current = html5QrCode;
     console.log(readerRef)
   }, [])
 
-  const qrCodeSuccessCallback = (result) =>{
+  const qrCodeSuccessCallback = (decodedText, decodedResult) =>{
 
-    console.log("scanned:"+result.codeResult.code);
-    setScannedCode(result.codeResult.code);
+    console.log("scanned:"+decodedText +" "+ decodedResult);
+    setScannedCode(decodedText);
 
   }
 
   const onStartScan = ()=>{
-    Quagga.start();
     setScanOn(true);
+    console.log("Start scan clicked ");
+  
+    // If you want to prefer back camera
+    const config = { fps: 10, qrbox: { width: '80%', height: '10%' } };
+    readerRef.current.start({ facingMode: "environment" },{}, qrCodeSuccessCallback);
   }
 
   const stopScan = () =>{
     if (scanOn) {
 
-      Quagga.stop();      
+      readerRef.current.stop().then((ignore) => {
+        // QR Code scanning is stopped.
+      }).catch((err) => {
+        setScannedCode(err)
+        // Stop failed, handle it.
+      });
 
       setScanOn(false);
     }

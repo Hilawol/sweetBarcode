@@ -15,11 +15,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ericblade/quagga2": "^1.4.2",
     "concurrently": "^6.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "html5-qrcode": "^2.1.2",
     "os": "^0.1.1",
+    "quagga": "^0.12.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
